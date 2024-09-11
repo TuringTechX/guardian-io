@@ -8,7 +8,6 @@ describe('Dashboard Component', () => {
   it('renders the dashboard component with charts and graphs', async () => {
     render(<Dashboard />);
 
-    // Check if certain chart elements are displayed
     const chartElement = await screen.findByTestId('line-chart');
     expect(chartElement).toBeInTheDocument();
 
@@ -16,7 +15,30 @@ describe('Dashboard Component', () => {
     expect(mapElement).toBeInTheDocument();
   });
 
-  it('displays API error message on failed data fetch', async () => {
+  it('displays "No data available" when API returns empty data', async () => {
+    server.use(
+      rest.get('/api/dashboardData', (req, res, ctx) => {
+        return res(ctx.json({ metrics: {}, charts: {} }));
+      })
+    );
+
+    render(<Dashboard />);
+
+    const noDataMessage = await screen.findByText('No data available');
+    expect(noDataMessage).toBeInTheDocument();
+  });
+
+  it('displays a loading state before data is fetched', async () => {
+    render(<Dashboard />);
+
+    const loadingMessage = screen.getByText('Loading...');
+    expect(loadingMessage).toBeInTheDocument();
+
+    // Wait for data to load
+    await screen.findByTestId('line-chart');
+  });
+
+  it('displays error message when API call fails', async () => {
     server.use(
       rest.get('/api/dashboardData', (req, res, ctx) => {
         return res(ctx.status(500));

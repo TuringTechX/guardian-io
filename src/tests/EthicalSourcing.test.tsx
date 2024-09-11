@@ -1,5 +1,5 @@
 // src/tests/EthicalSourcing.test.tsx
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import EthicalSourcing from '../components/EthicalSourcing';
 import { server } from '../mocks/server';
 import { rest } from 'msw';
@@ -12,14 +12,31 @@ describe('EthicalSourcing Component', () => {
     expect(recommendations).toBeInTheDocument();
   });
 
-  it('fetches and displays supplier ethical scores', async () => {
-    render(<EthicalSourcing />);
+  it('handles empty supplier data', async () => {
+    server.use(
+      rest.get('/api/ethicalSourcing', (req, res, ctx) => {
+        return res(ctx.json({ suppliers: [] })); // Empty suppliers
+      })
+    );
 
-    const score = await screen.findByText('Ethical Score');
-    expect(score).toBeInTheDocument();
+    render(<EthicalSourcing />);
+    const noDataMessage = await screen.findByText('No supplier data available');
+    expect(noDataMessage).toBeInTheDocument();
   });
 
-  it('displays error message on failed ethical sourcing data fetch', async () => {
+  it('displays warning for low ethical scores', async () => {
+    server.use(
+      rest.get('/api/ethicalSourcing', (req, res, ctx) => {
+        return res(ctx.json({ suppliers: [{ id: 1, name: 'Supplier B', ethicalScore: 40 }] }));
+      })
+    );
+
+    render(<EthicalSourcing />);
+    const lowScoreWarning = await screen.findByText('Supplier B has a low ethical score: 40');
+    expect(lowScoreWarning).toBeInTheDocument();
+  });
+
+  it('displays error message on failed API call', async () => {
     server.use(
       rest.get('/api/ethicalSourcing', (req, res, ctx) => {
         return res(ctx.status(500));

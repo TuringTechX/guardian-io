@@ -5,18 +5,23 @@ import { server } from '../mocks/server';
 import { rest } from 'msw';
 
 describe('BlockchainLedger Component', () => {
-  it('renders the blockchain ledger component with transactions', async () => {
+  it('renders blockchain ledger with transactions', async () => {
     render(<BlockchainLedger />);
 
     const transactionTable = await screen.findByTestId('transaction-table');
     expect(transactionTable).toBeInTheDocument();
   });
 
-  it('shows blockchain transactions', async () => {
-    render(<BlockchainLedger />);
+  it('handles empty transactions data', async () => {
+    server.use(
+      rest.get('/api/blockchainLedger', (req, res, ctx) => {
+        return res(ctx.json({ transactions: [] })); // No transactions
+      })
+    );
 
-    const transaction = await screen.findByText('Transaction ID');
-    expect(transaction).toBeInTheDocument();
+    render(<BlockchainLedger />);
+    const noDataMessage = await screen.findByText('No transactions available');
+    expect(noDataMessage).toBeInTheDocument();
   });
 
   it('displays error message on API failure', async () => {

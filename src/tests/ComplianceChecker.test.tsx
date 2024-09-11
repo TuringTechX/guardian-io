@@ -15,9 +15,20 @@ describe('ComplianceChecker Component', () => {
     expect(progressBar).toBeInTheDocument();
   });
 
-  it('submits form data and shows success message', async () => {
+  it('shows validation error for missing inputs', async () => {
     render(<ComplianceChecker />);
-    
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    fireEvent.click(submitButton);
+
+    const validationError = await screen.findByText('All fields are required');
+    expect(validationError).toBeInTheDocument();
+  });
+
+  it('displays success message on valid form submission', async () => {
+    render(<ComplianceChecker />);
+
+    fireEvent.change(screen.getByLabelText('Compliance Data'), { target: { value: 'Valid Data' } });
     const submitButton = screen.getByRole('button', { name: /submit/i });
     fireEvent.click(submitButton);
 
@@ -38,5 +49,18 @@ describe('ComplianceChecker Component', () => {
 
     const errorMessage = await screen.findByText('Compliance check failed');
     expect(errorMessage).toBeInTheDocument();
+  });
+
+  it('displays a loading state during form submission', async () => {
+    render(<ComplianceChecker />);
+
+    fireEvent.change(screen.getByLabelText('Compliance Data'), { target: { value: 'Valid Data' } });
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    fireEvent.click(submitButton);
+
+    const loadingMessage = await screen.findByText('Submitting...');
+    expect(loadingMessage).toBeInTheDocument();
+
+    await screen.findByText('Compliance check successful');
   });
 });
