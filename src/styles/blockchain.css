@@ -1,0 +1,29 @@
+/* src/styles/blockchain.css */
+
+.blockchain-page {
+    background-color: #1a202c;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  
+  .blockchain-visualization {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .block {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+  }
+  
+  .transaction-table {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2rem;
+  }
+  
