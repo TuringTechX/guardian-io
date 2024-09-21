@@ -1,100 +1,81 @@
-// Import necessary components and hooks
-import React from 'react';
-import Link from 'next/link';
+// src/pages/index.tsx
+
+import React, { useState, useEffect } from 'react';
+import { FaArrowLeft, FaArrowRight, FaLeaf, FaGavel, FaChartLine, FaShieldAlt } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { Carousel, CarouselItem } from '../components/Carousel';
+import { useDataSorting } from '../hooks/useDataSorting';  // Custom hook for sorting/filtering data
+import { FeatureCard } from '../components/FeatureCard';  // Reusable feature card
+import { featuresData, Feature } from '../data/featuresData'; // Static feature data (typed)
 
 const IndexPage: React.FC = () => {
+  // State for dynamic feature list
+  const [currentFeature, setCurrentFeature] = useState<number>(0);
+
+  // Custom hook for sorting features based on importance or user relevance
+  const sortedFeatures = useDataSorting(featuresData, 'importance');
+
+  // Carousel navigation
+  const nextFeature = () => setCurrentFeature((prev) => (prev + 1) % sortedFeatures.length);
+  const prevFeature = () => setCurrentFeature((prev) => (prev - 1 + sortedFeatures.length) % sortedFeatures.length);
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <header className="bg-gray-800 py-6 px-4">
-        <h1 className="text-4xl font-bold text-center">Guardian-IO: Supply Chain Transparency</h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-700">
+      <header className="flex justify-between items-center p-6 bg-white dark:bg-gray-800 shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Guardian-IO</h1>
+        <nav>
+          <ul className="flex space-x-6">
+            <li><a href="#features" className="text-lg text-gray-700 dark:text-gray-200 hover:text-blue-600">Features</a></li>
+            <li><a href="#contact" className="text-lg text-gray-700 dark:text-gray-200 hover:text-blue-600">Contact</a></li>
+          </ul>
+        </nav>
       </header>
 
-      <main className="py-10 px-4">
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Dashboard Card */}
-          <Link href="/dashboard">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Dashboard</h2>
-              <p className="mt-2">
-                Interactive dashboard with supply chain transparency data, including graphs, charts, and world maps.
-              </p>
-            </div>
-          </Link>
+      <section id="hero" className="text-center py-16 bg-gradient-to-r from-blue-500 to-green-400 text-white">
+        <h2 className="text-4xl font-extrabold mb-6">Empowering Ethical Business Practices</h2>
+        <p className="text-lg max-w-xl mx-auto mb-8">
+          Gain full visibility into your supply chain and ensure compliance with global labor and sustainability standards.
+        </p>
+        <a href="#features" className="bg-white text-blue-500 px-6 py-3 rounded-full font-bold shadow hover:bg-gray-200 transition">Explore Features</a>
+      </section>
 
-          {/* Collaboration Platform Card */}
-          <Link href="/collaboration">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Collaboration Platform</h2>
-              <p className="mt-2">
-                Engage in forums, share documents, and interact with other users to discuss sustainability practices.
-              </p>
-            </div>
-          </Link>
+      <section id="features" className="py-16 bg-white dark:bg-gray-900">
+        <h3 className="text-center text-3xl font-bold text-gray-800 dark:text-white mb-12">Our Core Features</h3>
 
-          {/* Compliance Checker Card */}
-          <Link href="/compliance-checker">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Compliance Checker</h2>
-              <p className="mt-2">
-                Evaluate your compliance with sustainability standards through an intuitive form-based system.
-              </p>
-            </div>
-          </Link>
+        <div className="relative flex items-center justify-center">
+          <button className="absolute left-0 text-gray-600 dark:text-white" onClick={prevFeature}>
+            <FaArrowLeft size={24} />
+          </button>
 
-          {/* Wildlife Crime Awareness Card */}
-          <Link href="/wildlife-crime">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Wildlife Crime Awareness</h2>
-              <p className="mt-2">
-                View hotspots of wildlife crime with interactive maps and animated endangered species icons.
-              </p>
-            </div>
-          </Link>
+          {/* Carousel of features */}
+          <Carousel>
+            {sortedFeatures.map((feature: Feature, index: number) => (
+              <CarouselItem key={feature.id} active={index === currentFeature}>
+                <FeatureCard feature={feature} />
+              </CarouselItem>
+            ))}
+          </Carousel>
 
-          {/* Risk Assessment Card */}
-          <Link href="/risk-assessment">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Risk Assessment</h2>
-              <p className="mt-2">
-                Utilize machine learning to assess and predict risks within your supply chain.
-              </p>
-            </div>
-          </Link>
+          <button className="absolute right-0 text-gray-600 dark:text-white" onClick={nextFeature}>
+            <FaArrowRight size={24} />
+          </button>
+        </div>
+      </section>
 
-          {/* Blockchain Transparency Card */}
-          <Link href="/blockchain">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Blockchain Transparency</h2>
-              <p className="mt-2">
-                Explore blockchain technology to verify and track transparent supply chain transactions.
-              </p>
-            </div>
-          </Link>
+      <section id="contact" className="py-16 bg-gray-100 dark:bg-gray-800">
+        <h3 className="text-center text-2xl font-bold text-gray-800 dark:text-white mb-8">Get in Touch</h3>
+        <p className="text-center text-lg text-gray-600 dark:text-gray-300 mb-4">
+          Contact us to learn how Guardian-IO can help you meet your compliance and sustainability goals.
+        </p>
+        <div className="flex justify-center">
+          <a href="mailto:contact@guardian-io.com" className="bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-blue-700 transition">
+            Email Us
+          </a>
+        </div>
+      </section>
 
-          {/* Ethical Sourcing Card */}
-          <Link href="/ethical-sourcing">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Ethical Sourcing</h2>
-              <p className="mt-2">
-                Receive AI-driven recommendations for ethical suppliers with badges for sustainability.
-              </p>
-            </div>
-          </Link>
-
-          {/* Gamification of Goals */}
-          <Link href="/gamification">
-            <div className="bg-gray-700 rounded-lg p-6 shadow-lg cursor-pointer hover:bg-gray-600">
-              <h2 className="text-2xl font-bold">Gamification of Goals</h2>
-              <p className="mt-2">
-                Track progress on sustainability goals and earn badges in a gamified leaderboard system.
-              </p>
-            </div>
-          </Link>
-        </section>
-      </main>
-
-      <footer className="bg-gray-800 py-4 text-center">
-        <p>© 2024 Guardian-IO. All rights reserved.</p>
+      <footer className="bg-gray-200 dark:bg-gray-700 text-center py-6">
+        <p className="text-gray-600 dark:text-gray-300">© 2024 Guardian-IO. All rights reserved.</p>
       </footer>
     </div>
   );
