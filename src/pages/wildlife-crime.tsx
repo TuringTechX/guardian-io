@@ -3,38 +3,66 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { WildlifeCrimeMap } from '../components/Map/WildlifeCrimeMap';
+import { CrimeFilter } from '../components/CrimeFilter';
 import { CrimeDetailsCard } from '../components/CrimeDetailsCard';
+import { TimeSlider } from '../components/TimeSlider';
 import { useGeoDataSorting } from '../hooks/useGeoDataSorting';
-import { CrimeData } from '../data/wildlifeCrimeData'; // CrimeData type
+import { connectWebSocket, disconnectWebSocket } from '../services/crimeService';
+import { sendNotification, requestNotificationPermission } from '../services/notificationService';
+import { debounce } from '../utils/apiHelper';
+import { CrimeData } from '../data/wildlifeCrimeData';
 
 const WildlifeCrimePage: React.FC = () => {
+  const [crimeData, setCrimeData] = useState<CrimeData[]>([]);
   const [currentCrime, setCurrentCrime] = useState<number>(0);
-  const [crimeData, setCrimeData] = useState<CrimeData[]>([]); // Dynamic data from API
+  const [filters, setFilters] = useState<{ severity: number; startDate: string; endDate: string }>({
+    severity: 1,
+    startDate: '2020-01-01',
+    endDate: new Date().toISOString().split('T')[0], // Today's date
+  });
+  const [currentDate, setCurrentDate] = useState<string>(new Date().toISOString().split('T')[0]);
 
-  // Example user location for proximity sorting
   const userLocation = { latitude: 40.7128, longitude: -74.0060 }; // Example: New York City
 
-  // Fetch wildlife crime data from API
+  // Fetch wildlife crime data (debounced)
   useEffect(() => {
-    async function fetchCrimeData() {
+    const fetchCrimeData = debounce(async () => {
       try {
-        const response = await fetch('https://api.example.com/wildlife-crimes'); // Replace with actual API URL
+        const response = await fetch('https://api.example.com/wildlife-crimes');
         const data = await response.json();
         setCrimeData(data);
       } catch (error) {
         console.error('Failed to fetch crime data:', error);
       }
-    }
+    }, 300);  // 300ms debounce delay
+
     fetchCrimeData();
+  }, [filters]);
+
+  // Real-time crime updates via WebSocket
+  useEffect(() => {
+    requestNotificationPermission();  // Request notification permission on page load
+
+    const handleNewCrime = (newCrime: CrimeData) => {
+      setCrimeData((prevData) => [...prevData, newCrime]);
+      sendNotification('New Wildlife Crime Alert', {
+        body: `${newCrime.title} reported near you!`,
+        icon: '/icons/crime-alert.png',
+      });
+    };
+
+    connectWebSocket(handleNewCrime);
+
+    return () => disconnectWebSocket();
   }, []);
 
-  // Sort fetched data based on proximity to user's location
+  // Sort fetched and real-time data based on proximity
   const sortedCrimeData = useGeoDataSorting(crimeData, {
     method: 'proximity',
     userLocation,
   });
 
-  // Carousel navigation
+  // Carousel Navigation
   const nextCrime = () => setCurrentCrime((prev) => (prev + 1) % sortedCrimeData.length);
   const prevCrime = () => setCurrentCrime((prev) => (prev - 1 + sortedCrimeData.length) % sortedCrimeData.length);
 
@@ -44,6 +72,20 @@ const WildlifeCrimePage: React.FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Wildlife Crime Tracker</h1>
       </header>
 
+      {/* Filters for Severity and Date Range */}
+      <section id="filters" className="py-8 bg-gray-100 dark:bg-gray-800">
+        <CrimeFilter filters={filters} setFilters={setFilters} />
+      </section>
+
+      {/* TimeSlider for Animation */}
+      <TimeSlider
+        startDate="2020-01-01"
+        endDate={new Date().toISOString().split('T')[0]}
+        currentDate={currentDate}
+        onDateChange={setCurrentDate}
+      />
+
+      {/* Crime Carousel */}
       <section id="crimes" className="py-16 bg-white dark:bg-gray-900">
         <h3 className="text-center text-3xl font-bold text-gray-800 dark:text-white mb-12">Major Wildlife Crimes</h3>
 
@@ -52,8 +94,7 @@ const WildlifeCrimePage: React.FC = () => {
             <FaArrowLeft size={24} />
           </button>
 
-          {/* Carousel of wildlife crimes */}
-          {sortedCrimeData.map((crime: CrimeData, index: number) => (
+          {sortedCrimeData.length > 0 && sortedCrimeData.map((crime: CrimeData, index: number) => (
             <CrimeDetailsCard key={crime.id} crime={crime} active={index === currentCrime} />
           ))}
 
@@ -63,11 +104,12 @@ const WildlifeCrimePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Map with Heatmap and Clustering */}
       <section id="map" className="py-16 bg-gray-100 dark:bg-gray-800">
         <h3 className="text-center text-3xl font-bold text-gray-800 dark:text-white mb-12">Global Wildlife Crime Hotspots</h3>
 
         <div className="max-w-6xl mx-auto">
-          <WildlifeCrimeMap data={sortedCrimeData} />
+          <WildlifeCrimeMap data={sortedCrimeData} filters={{ ...filters, currentDate }} />
         </div>
       </section>
 
