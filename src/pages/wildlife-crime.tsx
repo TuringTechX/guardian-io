@@ -12,6 +12,46 @@ import { sendNotification, requestNotificationPermission } from '../services/not
 import { debounce } from '../utils/apiHelper';
 import { CrimeData } from '../data/wildlifeCrimeData';
 
+// src/pages/wildlife-crime.tsx
+
+import { fetchPredictions } from '../services/aiPredictionService';
+
+// In useEffect, fetch predictions
+useEffect(() => {
+  const fetchAIData = async () => {
+    const predictions = await fetchPredictions(currentDate); // Predicted data for the currentDate
+    setCrimeData((prevData) => [...prevData, ...predictions]); // Merge real and predicted data
+  };
+
+  fetchAIData();
+}, [currentDate]);
+
+// In the WildlifeCrimeMap, render predicted crimes with different marker styles
+<WildlifeCrimeMap
+  data={sortedCrimeData}
+  filters={{ ...filters, currentDate }}
+  predictedData={predictions}
+/>
+
+// src/pages/wildlife-crime.tsx
+
+import { useTranslation } from 'react-i18next';
+
+const WildlifeCrimePage: React.FC = () => {
+  const { t } = useTranslation(); // Get translated strings
+
+  return (
+    <div className="min-h-screen">
+      <header className="flex justify-between items-center p-6 bg-white">
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
+        <LanguageSwitcher />
+      </header>
+      {/* Rest of the page */}
+    </div>
+  );
+};
+
+
 const WildlifeCrimePage: React.FC = () => {
   const [crimeData, setCrimeData] = useState<CrimeData[]>([]);
   const [currentCrime, setCurrentCrime] = useState<number>(0);

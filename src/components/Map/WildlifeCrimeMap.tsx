@@ -11,6 +11,31 @@ import { LatLngExpression } from 'leaflet';
 import { CrimeData } from '../../data/wildlifeCrimeData';
 import L from 'leaflet';
 
+// src/components/Map/WildlifeCrimeMap.tsx
+
+// Pass in predictedData and render it differently
+export const WildlifeCrimeMap: React.FC<WildlifeCrimeMapProps> = ({ data, predictedData, filters }) => {
+  return (
+    <MapContainer center={defaultPosition} zoom={2} scrollWheelZoom={false} className="h-96 w-full">
+      {/* TileLayer, Heatmap */}
+      <MarkerClusterGroup>
+        {data.map((crime) => (
+          <Marker key={crime.id} position={[crime.latitude, crime.longitude]}>
+            <Popup>{crime.title}</Popup>
+          </Marker>
+        ))}
+        {/* Show predictions in different colors */}
+        {predictedData.map((crime) => (
+          <Marker key={crime.id} position={[crime.latitude, crime.longitude]} icon={PredictionIcon}>
+            <Popup>Predicted: {crime.title}</Popup>
+          </Marker>
+        ))}
+      </MarkerClusterGroup>
+    </MapContainer>
+  );
+};
+
+
 let DefaultIcon = L.icon({
     iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
