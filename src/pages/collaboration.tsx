@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Sidebar } from '../components/Sidebar';
-import { Header } from '../components/Header';
+import { Sidebar } from '../components/UIElements/Sidebar';
+import { Header } from '../components/UIElements/Header';
 import { Forum } from '../components/Collaboration/Forum';
 import { Chat } from '../components/Collaboration/Chat';
 import { DocumentSharing } from '../components/Collaboration/DocumentSharing';

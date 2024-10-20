@@ -1,7 +1,7 @@
 // src/tests/Footer.test.tsx
 
 import { render, screen } from '@testing-library/react';
-import Footer from '../components/Footer';
+import Footer from '../components/UIElements/Footer';
 
 test('renders Footer with social links', () => {
   render(<Footer />);

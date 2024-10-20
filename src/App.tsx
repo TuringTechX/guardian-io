@@ -3,9 +3,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';  // Framer Motion for page transitions
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Sidebar from './components/UIElements/Sidebar';
+import Header from './components/UIElements/Header';
+import Footer from './components/UIElements/Footer';
 import Dashboard from './pages/dashboard';
 import Collaboration from './pages/collaboration';
 // ...other imports

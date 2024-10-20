@@ -3,7 +3,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaBell, FaUserCircle } from 'react-icons/fa';
-import { ThemeContext } from '../context/ThemeContext';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Header = () => {
   const { toggleTheme, theme } = useContext(ThemeContext);

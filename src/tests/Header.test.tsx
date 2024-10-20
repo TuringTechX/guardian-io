@@ -1,7 +1,7 @@
 // src/tests/Header.test.tsx
 
 import { render, screen, fireEvent } from '@testing-library/react';
-import Header from '../components/Header';
+import Header from '../components/UIElements/Header';
 import { ThemeProvider } from '../context/ThemeContext';
 
 test('renders search bar and can type into it', () => {

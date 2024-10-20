@@ -1,7 +1,7 @@
 // src/tests/Sidebar.test.tsx
 
 import { render, screen } from '@testing-library/react';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/UIElements/Sidebar';
 import { BrowserRouter } from 'react-router-dom';
 import test from 'node:test';
 

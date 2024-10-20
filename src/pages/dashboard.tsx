@@ -4,9 +4,9 @@ import React, { useEffect, useState, useMemo, useCallback, useContext } from 're
 import LineChart from '../components/Charts/LineChart';
 import PieChart from '../components/Charts/PieChart';
 import BarChart from '../components/Charts/BarChart';
-import ProgressBar from '../components/ProgressBar';
+import ProgressBar from '../components/UIElements/ProgressBar';
 import Dropdown from '../components/Dropdown';
-import Tooltip from '../components/Tooltip';
+import Tooltip from '../components/UIElements/Tooltip';
 import LoadingSpinner from '../components/LoadingSpinner';
 import NotificationBanner from '../components/NotificationBanner'; // For WebSocket status notifications
 import { useSupplyChainData } from '../hooks/useSupplyChainData';

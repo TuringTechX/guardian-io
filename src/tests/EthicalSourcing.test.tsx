@@ -1,6 +1,6 @@
 // src/tests/EthicalSourcing.test.tsx
 import { render, screen } from '@testing-library/react';
-import EthicalSourcing from '../components/EthicalSourcing';
+import EthicalSourcing from '../components/EthicalSourcing/EthicalSourcing';
 import { server } from '../mocks/server';
 import { rest } from 'msw';
 
