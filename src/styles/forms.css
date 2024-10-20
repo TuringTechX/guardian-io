@@ -1,0 +1,107 @@
+/* src/styles/forms.css */
+
+/* CSS Variables for theming (easy color updates) */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --error-color: #e94b3c;
+    --success-color: #5cb85c;
+    --background-light: #f9f9f9;
+    --background-dark: #212121;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --border-radius: 8px;
+    --transition-duration: 0.3s;
+  }
+  
+  /* Universal Reset for Forms */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Input Fields */
+  input, textarea {
+    padding: 0.75rem 1rem;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+    font-size: 1rem;
+    transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  input:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.2);
+    outline: none;
+  }
+  
+  /* Placeholder Styling */
+  input::placeholder, textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  /* Error & Success States */
+  input.error, textarea.error {
+    border-color: var(--error-color);
+    box-shadow: 0 4px 10px rgba(233, 75, 60, 0.3);
+  }
+  
+  input.success, textarea.success {
+    border-color: var(--success-color);
+    box-shadow: 0 4px 10px rgba(92, 184, 92, 0.3);
+  }
+  
+  /* Submit Button */
+  button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-duration), box-shadow var(--transition-duration);
+  }
+  
+  button:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 4px 10px rgba(80, 227, 194, 0.3);
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Checkbox & Radio Inputs */
+  input[type="checkbox"], input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+  
+  label {
+    font-size: 1rem;
+    color: var(--text-dark);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    form {
+      padding: 1rem;
+    }
+  
+    input, textarea {
+      font-size: 0.875rem;
+    }
+  
+    button {
+      font-size: 0.875rem;
+    }
+  }
+  
