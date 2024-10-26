@@ -1,0 +1,41 @@
+/* src/styles/login.css */
+
+.login-page {
+    background: #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .login-form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .login-form button.btn-primary {
+    background: #3490dc;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .otp-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .otp-input input {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+  }
+  

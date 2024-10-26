@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { WildlifeCrimeMap } from '../components/Map/WildlifeCrimeMap';
-import { CrimeFilter } from '../components/CrimeFilter';
+import { CrimeFilter } from '../components/UIElements/CrimeFilter';
 import { CrimeDetailsCard } from '../components/CrimeDetailsCard';
-import { TimeSlider } from '../components/TimeSlider';
+import { TimeSlider } from '../components/UIElements/TimeSlider';
 import { useGeoDataSorting } from '../hooks/useGeoDataSorting';
 import { connectWebSocket, disconnectWebSocket } from '../services/crimeService';
 import { sendNotification, requestNotificationPermission } from '../services/notificationService';

@@ -1,0 +1,29 @@
+/* src/styles/sustainability.css */
+
+.sustainability-page {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .metric-card, .assessment-card {
+    background-color: #f5f7fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .metric-card:hover, .assessment-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .lifecycle-assessments h2, .sustainability-metrics h3 {
+    color: #2f80ed;
+  }
+  
+  .sustainability-goal-tracker {
+    padding: 2rem;
+    background-color: #e8f6e8;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+  

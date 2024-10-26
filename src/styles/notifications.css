@@ -1,0 +1,59 @@
+/* guardian-io/src/components/Notification/notifications.css */
+.notifications-container {
+    padding: 1rem;
+  }
+  
+  .notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .notification-item {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .notification-item.info {
+    background-color: #e0f7fa;
+  }
+  
+  .notification-item.warning {
+    background-color: #fff8e1;
+  }
+  
+  .notification-item.error {
+    background-color: #ffebee;
+  }
+  
+/* src/styles/notifications.css */
+
+.notifications-page {
+  padding: 20px;
+}
+
+.notifications-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.notification-card {
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+}
+
+.notifications-filter {
+  margin-bottom: 20px;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}

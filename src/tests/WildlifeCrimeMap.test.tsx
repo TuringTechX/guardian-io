@@ -1,6 +1,6 @@
 // src/tests/WildlifeCrimeMap.test.tsx
 import { render, screen } from '@testing-library/react';
-import WildlifeCrimeMap from '../components/WildlifeCrimeMap';
+import WildlifeCrimeMap from '../components/Wildlife/WildlifeCrimeMap';
 import { server } from '../mocks/server';
 import { rest } from 'msw';
 

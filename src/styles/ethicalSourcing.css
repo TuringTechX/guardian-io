@@ -1,0 +1,23 @@
+/* src/styles/ethicalSourcing.css */
+
+.ethical-sourcing-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .supplier-comparison {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .risk-card {
+    background-color: #f9f9f9;
+    border: 1px solid #e2e2e2;
+  }
+  
+  .recommendation-engine {
+    margin-top: 20px;
+  }
+  

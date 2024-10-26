@@ -1,0 +1,31 @@
+/* src/styles/labourRights.css */
+
+.labour-rights-page {
+    background-color: #f9fafb;
+    padding: 20px;
+  }
+  
+  .dashboard-summary {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .metric-card {
+    background: #e2e8f0;
+    padding: 20px;
+    border-radius: 8px;
+    width: 150px;
+    text-align: center;
+  }
+  
+  .compliance-audit-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .compliance-audit-table th,
+  .compliance-audit-table td {
+    padding: 10px;
+    border-bottom: 1px solid #cbd5e0;
+  }
+  

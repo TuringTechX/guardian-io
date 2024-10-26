@@ -1,0 +1,30 @@
+/* src/styles/supplyChain.css */
+
+.supply-chain-page {
+    padding: 20px;
+  }
+  
+  .transparency-metrics, .supplier-table {
+    margin-bottom: 1rem;
+  }
+  
+  .metric-card {
+    background: #f0f2f5;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .metric-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .supplier-table th, .supplier-table td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+  
+  .supplier-table tbody tr:hover {
+    background-color: #eaf4f4;
+  }
+  

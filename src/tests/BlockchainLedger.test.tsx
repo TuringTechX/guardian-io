@@ -1,6 +1,6 @@
 // src/tests/BlockchainLedger.test.tsx
 import { render, screen } from '@testing-library/react';
-import BlockchainLedger from '../components/BlockchainLedger';
+import BlockchainLedger from '../components/Blockchain/BlockchainLedger';
 import { server } from '../mocks/server';
 import { rest } from 'msw';
 

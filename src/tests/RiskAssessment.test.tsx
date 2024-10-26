@@ -1,6 +1,6 @@
 // src/tests/RiskAssessment.test.tsx
 import { render, screen } from '@testing-library/react';
-import RiskAssessment from '../components/RiskAssessment';
+import RiskAssessment from '../components/SupplyChain/RiskAssessmentTable';
 import { server } from '../mocks/server';
 import { rest } from 'msw';
 

@@ -1,0 +1,18 @@
+/* src/styles/esg.css */
+
+.esg-reporting-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .esg-dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .trend-analysis, .prediction-widget {
+    margin-top: 20px;
+  }
+  

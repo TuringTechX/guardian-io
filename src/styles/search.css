@@ -1,0 +1,27 @@
+/* src/styles/search.css */
+
+.search-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .search-filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+   
+  

@@ -1,0 +1,18 @@
+/* src/styles/gamification.css */
+
+.gamification-page {
+    max-width: 1200px;
+  }
+  
+  .goal {
+    margin-bottom: 16px;
+  }
+  
+  .progress-bar {
+    background-color: #ddd;
+  }
+  
+  .leaderboard-entry {
+    padding: 8px 0;
+  }
+  

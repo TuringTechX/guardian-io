@@ -1,5 +1,8 @@
-// src/components/Tables/SupplierTable.tsx
-import React, { useState } from 'react';
+// src/components/SupplyChain/SupplierTable.tsx
+
+import React, { useEffect, useState } from 'react';
+import { fetchSupplierRisks } from '../../services/supplyChainService';
+import { SupplierRisk } from '../../types/supplyChainTypes';
 
 interface Supplier {
   name: string;
@@ -7,33 +10,36 @@ interface Supplier {
   complianceStatus: string;
 }
 
+type SupplierType = Supplier | SupplierRisk;
+
 interface SupplierTableProps {
-  suppliers: Supplier[];
+  suppliers?: Supplier[];
 }
 
-const SupplierTable: React.FC<SupplierTableProps> = ({ suppliers }) => {
+const SupplierTable: React.FC<SupplierTableProps> = ({ suppliers: propSuppliers }) => {
+  const [suppliers, setSuppliers] = useState<SupplierType[]>(propSuppliers || []);
   const [sortField, setSortField] = useState<string>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 5; // Show 5 items per page
+  const itemsPerPage = 5;
 
-  // Sort suppliers based on selected field and direction
-  const sortedSuppliers = [...suppliers].sort((a, b) => {
-    const fieldA = a[sortField as keyof Supplier].toString().toLowerCase();
-    const fieldB = b[sortField as keyof Supplier].toString().toLowerCase();
-    if (sortDirection === 'asc') {
-      return fieldA.localeCompare(fieldB);
+  useEffect(() => {
+    if (!propSuppliers) {
+      fetchSupplierRisks().then((data) => setSuppliers(data));
     }
-    return fieldB.localeCompare(fieldA);
+  }, [propSuppliers]);
+
+  const sortedSuppliers = [...suppliers].sort((a, b) => {
+    const fieldA = (a[sortField as keyof SupplierType] ?? '').toString().toLowerCase();
+    const fieldB = (b[sortField as keyof SupplierType] ?? '').toString().toLowerCase();
+    return sortDirection === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
   });
 
-  // Get paginated suppliers
   const paginatedSuppliers = sortedSuppliers.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Change sorting direction
   const handleSort = (field: string) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -43,10 +49,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({ suppliers }) => {
     }
   };
 
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  const handlePageChange = (page: number) => setCurrentPage(page);
 
   const totalPages = Math.ceil(suppliers.length / itemsPerPage);
 
@@ -55,10 +58,10 @@ const SupplierTable: React.FC<SupplierTableProps> = ({ suppliers }) => {
       <table className="min-w-full border">
         <thead>
           <tr>
-            <th className="border px-4 py-2 cursor-pointer" onClick={() => handleSort('name')}>
-              Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+            <th className="border px-4 py-2 cursor-pointer" onClick={() => handleSort('name' in suppliers[0] ? 'name' : 'supplierName')}>
+              {('name' in suppliers[0] ? 'Name' : 'Supplier')} {sortField === ('name' in suppliers[0] ? 'name' : 'supplierName') && (sortDirection === 'asc' ? '↑' : '↓')}
             </th>
-            <th className="border px-4 py-2">Location</th>
+            <th className="border px-4 py-2">{'location' in suppliers[0] ? 'Location' : 'Risk Score'}</th>
             <th className="border px-4 py-2 cursor-pointer" onClick={() => handleSort('complianceStatus')}>
               Compliance Status {sortField === 'complianceStatus' && (sortDirection === 'asc' ? '↑' : '↓')}
             </th>
@@ -67,8 +70,8 @@ const SupplierTable: React.FC<SupplierTableProps> = ({ suppliers }) => {
         <tbody>
           {paginatedSuppliers.map((supplier, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2">{supplier.name}</td>
-              <td className="border px-4 py-2">{supplier.location}</td>
+              <td className="border px-4 py-2">{'name' in supplier ? supplier.name : supplier.supplierName}</td>
+              <td className="border px-4 py-2">{'location' in supplier ? supplier.location : supplier.riskScore}</td>
               <td className="border px-4 py-2">{supplier.complianceStatus}</td>
             </tr>
           ))}

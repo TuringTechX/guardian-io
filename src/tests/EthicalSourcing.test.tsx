@@ -48,3 +48,25 @@ describe('EthicalSourcing Component', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 });
+
+// src/tests/EthicalSourcing.test.tsx
+
+import { render, screen } from '@testing-library/react';
+import EthicalSourcingPage from '../pages/ethical-sourcing';
+import { useEthicalSourcing } from '../hooks/useEthicalSourcing';
+
+jest.mock('../hooks/useEthicalSourcing');
+
+describe('EthicalSourcingPage', () => {
+  test('renders loading state', () => {
+    useEthicalSourcing.mockReturnValue({ loading: true });
+    render(<EthicalSourcingPage />);
+    expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+  });
+
+  test('renders error state', () => {
+    useEthicalSourcing.mockReturnValue({ loading: false, error: 'Failed to load' });
+    render(<EthicalSourcingPage />);
+    expect(screen.getByText(/Error loading data/i)).toBeInTheDocument();
+  });
+});

@@ -1,45 +1,53 @@
 // src/pages/index.tsx
 
-import React, { useState, useEffect } from 'react';
-import { FaArrowLeft, FaArrowRight, FaLeaf, FaGavel, FaChartLine, FaShieldAlt } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, FC } from 'react';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Carousel, CarouselItem } from '../components/Carousel';
 import { useDataSorting } from '../hooks/useDataSorting';  // Custom hook for sorting/filtering data
 import { FeatureCard } from '../components/FeatureCard';  // Reusable feature card
 import { featuresData, Feature } from '../data/featuresData'; // Static feature data (typed)
+import HeroSection from '../components/LandingPage/HeroSection';
+import FeaturesSection from '../components/LandingPage/FeaturesSection';
+import TestimonialSection from '../components/LandingPage/TestimonialSection';
+import PartnersSection from '../components/LandingPage/PartnersSection';
+import Footer from '../components/LandingPage/Footer';
 
-const IndexPage: React.FC = () => {
+// Typing for the main IndexPage component
+const IndexPage: FC = () => {
   // State for dynamic feature list
   const [currentFeature, setCurrentFeature] = useState<number>(0);
+  const [isPaused, setIsPaused] = useState<boolean>(false); // New state for autoplay pause
 
   // Custom hook for sorting features based on importance or user relevance
-  const sortedFeatures = useDataSorting(featuresData, 'importance');
+  const sortedFeatures: Feature[] = useDataSorting(featuresData, 'importance');
 
   // Carousel navigation
   const nextFeature = () => setCurrentFeature((prev) => (prev + 1) % sortedFeatures.length);
   const prevFeature = () => setCurrentFeature((prev) => (prev - 1 + sortedFeatures.length) % sortedFeatures.length);
 
+  // Autoplay feature - automatically navigate to the next feature every 5 seconds
+  useEffect(() => {
+    if (!isPaused) {
+      const intervalId = setInterval(nextFeature, 5000); // Auto-slide every 5 seconds
+      return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }
+  }, [isPaused, sortedFeatures.length]);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-700">
-      <header className="flex justify-between items-center p-6 bg-white dark:bg-gray-800 shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Guardian-IO</h1>
-        <nav>
-          <ul className="flex space-x-6">
-            <li><a href="#features" className="text-lg text-gray-700 dark:text-gray-200 hover:text-blue-600">Features</a></li>
-            <li><a href="#contact" className="text-lg text-gray-700 dark:text-gray-200 hover:text-blue-600">Contact</a></li>
-          </ul>
-        </nav>
-      </header>
+      {/* Main Landing Page Sections */}
+      <HeroSection />
+      <FeaturesSection />
+      <TestimonialSection />
+      <PartnersSection />
 
-      <section id="hero" className="text-center py-16 bg-gradient-to-r from-blue-500 to-green-400 text-white">
-        <h2 className="text-4xl font-extrabold mb-6">Empowering Ethical Business Practices</h2>
-        <p className="text-lg max-w-xl mx-auto mb-8">
-          Gain full visibility into your supply chain and ensure compliance with global labor and sustainability standards.
-        </p>
-        <a href="#features" className="bg-white text-blue-500 px-6 py-3 rounded-full font-bold shadow hover:bg-gray-200 transition">Explore Features</a>
-      </section>
-
-      <section id="features" className="py-16 bg-white dark:bg-gray-900">
+      {/* Custom Feature Carousel Section */}
+      <section
+        id="features"
+        className="py-16 bg-white dark:bg-gray-900"
+        onMouseEnter={() => setIsPaused(true)}  // Pause autoplay on hover
+        onMouseLeave={() => setIsPaused(false)} // Resume autoplay on mouse leave
+      >
         <h3 className="text-center text-3xl font-bold text-gray-800 dark:text-white mb-12">Our Core Features</h3>
 
         <div className="relative flex items-center justify-center">
@@ -47,7 +55,6 @@ const IndexPage: React.FC = () => {
             <FaArrowLeft size={24} />
           </button>
 
-          {/* Carousel of features */}
           <Carousel>
             {sortedFeatures.map((feature: Feature, index: number) => (
               <CarouselItem key={feature.id} active={index === currentFeature}>
@@ -62,21 +69,8 @@ const IndexPage: React.FC = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-16 bg-gray-100 dark:bg-gray-800">
-        <h3 className="text-center text-2xl font-bold text-gray-800 dark:text-white mb-8">Get in Touch</h3>
-        <p className="text-center text-lg text-gray-600 dark:text-gray-300 mb-4">
-          Contact us to learn how Guardian-IO can help you meet your compliance and sustainability goals.
-        </p>
-        <div className="flex justify-center">
-          <a href="mailto:contact@guardian-io.com" className="bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-blue-700 transition">
-            Email Us
-          </a>
-        </div>
-      </section>
-
-      <footer className="bg-gray-200 dark:bg-gray-700 text-center py-6">
-        <p className="text-gray-600 dark:text-gray-300">© 2024 Guardian-IO. All rights reserved.</p>
-      </footer>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

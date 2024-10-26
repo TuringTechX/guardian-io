@@ -1,0 +1,23 @@
+/* src/styles/csr.css */
+
+.csr-page {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .csr-dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .project-timeline, .impact-map {
+    margin-top: 20px;
+  }
+  
+  .future-impact {
+    background-color: #f0f4ff;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  

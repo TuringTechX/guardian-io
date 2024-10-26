@@ -1,0 +1,38 @@
+/* src/styles/antiForcedLabour.css */
+
+.anti-forced-labour-page {
+    padding: 20px;
+    background-color: #f9fafb;
+  }
+  
+  .compliance-dashboard {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .metric-card {
+    background: #e2e8f0;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .compliance-form label,
+  .risk-factor-chart h3 {
+    font-weight: bold;
+  }
+  
+  .btn-submit {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .risk-factor-chart {
+    margin: 20px 0;
+  }
+  

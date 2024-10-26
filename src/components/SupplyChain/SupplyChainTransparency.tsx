@@ -7,6 +7,9 @@ import SupplierTable from './Tables/SupplierTable';
 import BlockchainTable from './Tables/BlockchainTable';  
 import useSupplyChainData from '../hooks/useSupplyChainData';  
 import crypto from 'crypto';  // For secure hashing
+import { fetchTransparencyMetrics } from '../services/supplyChainService';
+import { TransparencyMetric } from '../types/supplyChainTypes';
+import '../styles/supplyChain.css';
 
 interface Supplier {
   name: string;
@@ -29,6 +32,12 @@ const SupplyChainTransparency: React.FC = () => {
   const [blockchain, setBlockchain] = useState<BlockchainBlock[]>([]);
   const [filter, setFilter] = useState<string>(''); 
   const [verificationStatus, setVerificationStatus] = useState<string>('Pending'); // Verification state
+  const [metrics, setMetrics] = useState<TransparencyMetric[]>([]); // Transparency metrics state
+
+  // Fetching transparency metrics
+  useEffect(() => {
+    fetchTransparencyMetrics().then(setMetrics);
+  }, []);
 
   // Cryptographic hash using SHA-256
   const calculateHash = (block: BlockchainBlock): string => {
@@ -103,7 +112,7 @@ const SupplyChainTransparency: React.FC = () => {
 
       <div>
         <h2 className="text-xl font-semibold">Blockchain Transaction Log</h2>
-        <p>Verification Status: {verificationStatus}</p> {/* Display verification status */}
+        <p>Verification Status: {verificationStatus}</p> {/* Display verification status */} 
         <BlockchainTable blocks={blockchain} />
       </div>
 
@@ -122,6 +131,15 @@ const SupplyChainTransparency: React.FC = () => {
       <div className="grid grid-cols-2 gap-4">
         <PieChart data={supplyChainData?.complianceMetrics || []} />
         <LineChart data={supplyChainData?.supplyChainProgress || []} />
+      </div>
+
+      <div className="transparency-metrics grid grid-cols-2 gap-4 mb-8">
+        {metrics.map((metric) => (
+          <div key={metric.id} className="metric-card">
+            <h3 className="text-2xl font-semibold">{metric.name}</h3>
+            <p>{metric.value}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
