@@ -1,0 +1,58 @@
+/* src/components/Dropdown/Dropdown.module.css */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .dropdownButton {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+  
+  .dropdownItem {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropdownItem:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .selected {
+    font-weight: bold;
+  }
+  
+  .arrow {
+    font-size: 0.8rem;
+    color: #555;
+  }
+  

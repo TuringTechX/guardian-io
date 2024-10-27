@@ -4,7 +4,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Carousel, CarouselItem } from '../components/Carousel';
 import { useDataSorting } from '../hooks/useDataSorting';  // Custom hook for sorting/filtering data
-import { FeatureCard } from '../components/FeatureCard';  // Reusable feature card
+import { FeatureCard } from '../components/UIElements/FeatureCard';  // Reusable feature card
 import { featuresData, Feature } from '../data/featuresData'; // Static feature data (typed)
 import HeroSection from '../components/LandingPage/HeroSection';
 import FeaturesSection from '../components/LandingPage/FeaturesSection';

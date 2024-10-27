@@ -1,23 +1,39 @@
-// src/components/Footer.tsx
+// src/components/UIElements/Footer.tsx
 
-import React from 'react';
-import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
+import { LanguageContext } from '../../context/LanguageContext';
+import SocialMediaIcons from './SocialMediaIcons';
+import LanguageSelector from './LanguageSelector';
+import ThemeToggle from './ThemeToggle';
+import '../../styles/footer.css';
 
-const Footer = () => {
+const Footer: React.FC = () => {
+  const { theme } = useContext(ThemeContext);
+  const { currentLanguage } = useContext(LanguageContext);
+
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-white dark:bg-gray-800 text-center p-4">
-      <div className="flex justify-center space-x-6">
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">
-          <FaTwitter className="text-2xl" />
-        </a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">
-          <FaLinkedin className="text-2xl" />
-        </a>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">
-          <FaGithub className="text-2xl" />
-        </a>
+    <footer className={`footer ${theme === 'dark' ? 'footer-dark' : 'footer-light'}`}>
+      <div className="footer-content">
+        <div className="footer-links">
+          <a href="/about" className="footer-link">About Us</a>
+          <a href="/privacy" className="footer-link">Privacy Policy</a>
+          <a href="/terms" className="footer-link">Terms of Service</a>
+          <a href="/contact" className="footer-link">Contact</a>
+        </div>
+        
+        <div className="footer-middle">
+          <SocialMediaIcons />
+          <LanguageSelector />
+        </div>
+        
+        <div className="footer-bottom">
+          <span className="footer-copy">&copy; {year} Guardian-IO. {currentLanguage === 'en' ? 'All Rights Reserved.' : 'Todos los derechos reservados.'}</span>
+          <ThemeToggle />
+        </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-400 mt-4">© 2024 Guardian.io - All rights reserved</p>
     </footer>
   );
 };

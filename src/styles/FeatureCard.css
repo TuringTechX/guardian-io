@@ -1,0 +1,33 @@
+/* src/styles/FeatureCard.css */
+
+.feature-card {
+    position: relative;
+    padding: 1.25rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .tag-badge {
+    background-color: #ebf4ff;
+    color: #3182ce;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+  }
+  
+  .tool-badge {
+    background-color: #f0fff4;
+    color: #38a169;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+  }
+  
