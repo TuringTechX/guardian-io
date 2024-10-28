@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "esnext",                    // Enables modern syntax and async features
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -11,16 +12,38 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "incremental": true,                    // Enables incremental builds for faster compilation
+    "forceConsistentCasingInFileNames": true, // Prevents errors due to inconsistent file naming
+    "noFallthroughCasesInSwitch": true,     // Ensures all switch cases are handled, improving reliability
+    "noUnusedLocals": true,                 // Removes unused local variables for cleaner code
+    "noUnusedParameters": true,             // Ensures unused parameters are removed, increasing readability
+    "baseUrl": ".",                         // Simplifies pathing for imports
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["node"],                      // Specifies the node environment types
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "customMatcher": "\\.module\\.(scss|css)$" // Supports CSS Modules for custom styling
+        }
+      },
+      {
+        "name": "typescript-plugin-next"      // Supports Next.js types
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",                               // Excludes build directory for cleaner type-checking
+    "**/*.test.ts",                        // Skips test files, optimizing for production build
+    "**/__mocks__"                         // Excludes mock files from production builds
+  ]
 }
