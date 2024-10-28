@@ -1,6 +1,9 @@
 // src/services/WebSocketAPI.ts
 
 export class WebSocketAPI {
+    static connect(): WebSocket | null {
+      throw new Error('Method not implemented.');
+    }
     private static instance: WebSocketAPI;
     private socket: WebSocket | null = null;
     private url: string;

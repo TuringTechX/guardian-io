@@ -1,38 +1,166 @@
 /* src/styles/antiForcedLabour.css */
 
 .anti-forced-labour-page {
-    padding: 20px;
-    background-color: #f9fafb;
-  }
-  
-  .compliance-dashboard {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .metric-card {
-    background: #e2e8f0;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .compliance-form label,
-  .risk-factor-chart h3 {
-    font-weight: bold;
-  }
-  
-  .btn-submit {
-    background-color: #3b82f6;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .risk-factor-chart {
-    margin: 20px 0;
-  }
-  
+  padding: 20px;
+  background-color: #f9fafb;
+  font-family: Arial, sans-serif;
+}
+
+/* Compliance Dashboard */
+.compliance-dashboard {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: #e2e8f0;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Compliance Form */
+.compliance-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.compliance-form input,
+.compliance-form select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 15px;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-submit {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: #2563eb;
+}
+
+/* Risk Factor Chart */
+.risk-factor-chart {
+  margin: 20px 0;
+}
+
+.risk-factor-chart h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Alerts Panel */
+.alerts-panel {
+  padding: 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-item {
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.alert-item.high {
+  background-color: #fee2e2;
+}
+
+.alert-item.medium {
+  background-color: #fef3c7;
+}
+
+.alert-item.low {
+  background-color: #dcfce7;
+}
+
+.alert-item button {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Audit History Table */
+.audit-history-table {
+  background-color: #f3f4f6;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.audit-history-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.audit-history-table th,
+.audit-history-table td {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  text-align: left;
+}
+
+.audit-history-table th {
+  background-color: #e5e7eb;
+  font-weight: bold;
+}
+
+.audit-history-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+/* Partner Links */
+.partner-links {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.partner-links ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.partner-links li {
+  margin-bottom: 10px;
+}
+
+.partner-links a {
+  color: #3b82f6;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.partner-links a:hover {
+  color: #2563eb;
+}
