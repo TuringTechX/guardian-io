@@ -2,15 +2,16 @@
 
 import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { LoadingSpinner } from './LoadingSpinner'; // Import a loading spinner for loading states
 import { IconType } from 'react-icons';
+import LoadingSpinner from './LoadingSpinner';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+// Define props, omitting incompatible types for motion.button
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onDragStart' | 'onAnimationStart' | 'onAnimationEnd'> {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'danger' | 'outline' | 'text';
   size?: 'small' | 'medium' | 'large';
   loading?: boolean;
-  icon?: IconType;  // For optional icon display
+  icon?: IconType;  // Optional icon for button
   disabled?: boolean;
 }
 
@@ -38,24 +39,22 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  // Add framer motion animation for button hover effects
-  const motionProps = {
-    whileHover: { scale: 1.05 },
-    whileTap: { scale: 0.95 },
-  };
-
   return (
     <motion.button
-      {...motionProps}
-      className={`button ${buttonStyles[variant]} ${sizeStyles[size]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className} flex items-center justify-center space-x-2 transition duration-150 ease-in-out`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={`button ${buttonStyles[variant]} ${sizeStyles[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      } ${className} flex items-center justify-center space-x-2 transition duration-150 ease-in-out`}
       disabled={disabled || loading}
       {...props}
     >
-      {/* Icon rendering with conditional style */}
+      {/* Render Icon if not loading */}
       {Icon && !loading && <Icon className="text-lg mr-2" />}
-      {/* Loading state for button */}
+      
+      {/* Display LoadingSpinner when loading */}
       {loading ? (
-        <LoadingSpinner size="small" color={variant === 'text' ? 'text-blue-600' : 'text-white'} />
+        <LoadingSpinner size={size} color={variant === 'text' ? 'text-blue-600' : 'text-white'} />
       ) : (
         children
       )}
