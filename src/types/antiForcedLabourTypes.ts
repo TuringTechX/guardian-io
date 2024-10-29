@@ -1,9 +1,10 @@
 // src/types/antiForcedLabourTypes.ts
 
-// Enums for standardizing types
+// Enums for standardized values
+
 export enum Outcome {
-  Pass = 'pass',
-  Fail = 'fail',
+  Pass = 'Pass',
+  Fail = 'Fail',
 }
 
 export enum AlertPriority {
@@ -18,49 +19,18 @@ export enum AlertCategory {
   Other = 'Other',
 }
 
-// New enum for audit status options
+// Enum for audit status options
 export enum AuditStatus {
   Pending = 'Pending',
   Reviewed = 'Reviewed',
   InProgress = 'InProgress',
 }
 
-// Enum for different types of audits
+// Enum for types of audits conducted
 export enum AuditType {
   Internal = 'Internal',
   External = 'External',
   ThirdParty = 'ThirdParty',
-}
-
-// Record for audit history with detailed compliance information
-export interface AuditRecord {
-  id: string;
-  date: string;                    // Date in ISO format
-  location: string;
-  auditor: string;                  // Name of the auditor
-  outcome: Outcome;
-  status: AuditStatus;              // Status of the audit
-  type?: AuditType;                 // Type of audit, if applicable
-  details?: string;                 // Optional field for audit comments or extra details
-}
-
-// Risk factor details related to forced labor
-export interface RiskFactor {
-  id: string;
-  type: string;                     // Type of risk (e.g., "Child Labor", "Unsafe Conditions")
-  percentage: number;               // Risk percentage (e.g., 25 for 25%)
-  description?: string;             // Optional description of the risk factor
-}
-
-// Alert data structure for the anti-forced labor compliance module
-export interface Alert {
-  id: string;
-  message: string;
-  date: string;                     // Date in ISO format
-  priority: AlertPriority;
-  category: AlertCategory;
-  isDismissed: boolean;
-  actions?: AlertActions[];         // Optional actions for alert management
 }
 
 // Enum for possible actions on an alert
@@ -70,25 +40,56 @@ export enum AlertActions {
   Escalate = 'Escalate',
 }
 
-// Partner information and resources links
-export interface Partner {
-  id: string;                        // Unique identifier for partner
-  name: string;
-  url: string;
-  description?: string;              // Optional field for a brief description of the partner organization
+// Interface representing a single audit record in history
+export interface AuditRecord {
+  id: string;
+  date: string;                   // ISO format date string
+  location: string;
+  auditor: string;
+  outcome: Outcome;
+  status: AuditStatus;
+  type?: AuditType;
+  details?: string;               // Optional additional information or comments
 }
 
-// Compliance form data for audit submissions
+// Interface representing risk factors associated with forced labor compliance
+export interface RiskFactor {
+  id: string;
+  type: string;                   // Type of risk (e.g., "Child Labor", "Unsafe Conditions")
+  percentage: number;             // Percentage representing the risk level (0-100)
+  description?: string;           // Optional description for additional details
+}
+
+// Interface representing alerts in the anti-forced labor module
+export interface Alert {
+  id: string;
+  message: string;
+  date: string;                   // ISO format date string
+  priority: AlertPriority;
+  category: AlertCategory;
+  isDismissed: boolean;
+  actions?: AlertActions[];       // Optional actions available for this alert
+}
+
+// Interface for partner organizations and resources links
+export interface Partner {
+  id: string;
+  name: string;
+  url: string;
+  description?: string;           // Optional brief description of the partner organization
+}
+
+// Interface for compliance form data related to audit submissions
 export interface ComplianceFormData {
   companyName: string;
   industry: string;
   country: string;
   auditDate: string;
-  riskLevel: RiskFactor[];           // Array of associated risk factors
-  auditRecords: AuditRecord[];       // Array of past audit records for this compliance form
+  riskLevel: RiskFactor[];
+  auditRecords: AuditRecord[];
 }
 
-// Paginated result structure for API responses
+// Generic interface for paginated API results
 export interface PaginatedResult<T> {
   data: T[];
   currentPage: number;
@@ -98,16 +99,17 @@ export interface PaginatedResult<T> {
 
 // Props for the AuditHistoryTable component
 export interface AuditHistoryTableProps {
-  audits: AuditRecord[];             // Array of audit records
+  audits: PaginatedResult<AuditRecord>;   // Updated to handle paginated results of audits
 }
 
 // Props for the PartnerLinks component
 export interface PartnerLinksProps {
-  partners: Partner[];               // Array of partner links and descriptions
+  partners: Partner[];
 }
 
-// Additional utilities for filtering and options
+// Type for additional filter options available in the UI
 export type FilterOptions = 'All' | 'Pass' | 'Fail';
 
 // Alias type if "Audit" is required separately from "AuditRecord"
 export type Audit = AuditRecord;
+

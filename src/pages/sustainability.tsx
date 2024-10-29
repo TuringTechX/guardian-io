@@ -3,7 +3,7 @@
 import React from 'react';
 import { SustainabilityMetrics } from '../components/Sustainability/SustainabilityMetrics';
 import { LifeCycleAssessments } from '../components/Sustainability/LifeCycleAssessments';
-import { CarbonFootprintGraph } from '../components/Sustainability/CarbonFootprintGraph';
+import  CarbonFootprintGraph  from '../components/Sustainability/CarbonFootprintGraph';
 import { AuditChecklist } from '../components/Sustainability/AuditChecklist';
 import { SustainabilityFilters } from '../components/Sustainability/SustainabilityFilters';
 import { SustainabilityGoalTracker } from '../components/Sustainability/SustainabilityGoalTracker';

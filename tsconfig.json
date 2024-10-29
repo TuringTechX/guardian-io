@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
-    "target": "esnext",                    // Enables modern syntax and async features
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "esnext", // Enables modern syntax and async features
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,16 +16,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,                    // Enables incremental builds for faster compilation
+    "incremental": true, // Enables incremental builds for faster compilation
     "forceConsistentCasingInFileNames": true, // Prevents errors due to inconsistent file naming
-    "noFallthroughCasesInSwitch": true,     // Ensures all switch cases are handled, improving reliability
-    "noUnusedLocals": true,                 // Removes unused local variables for cleaner code
-    "noUnusedParameters": true,             // Ensures unused parameters are removed, increasing readability
-    "baseUrl": ".",                         // Simplifies pathing for imports
+    "noFallthroughCasesInSwitch": true, // Ensures all switch cases are handled, improving reliability
+    "noUnusedLocals": true, // Removes unused local variables for cleaner code
+    "noUnusedParameters": true, // Ensures unused parameters are removed, increasing readability
+    "baseUrl": ".", // Simplifies pathing for imports
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
-    "types": ["node"],                      // Specifies the node environment types
+    "types": [
+      "node"
+    ], // Specifies the node environment types
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
@@ -30,7 +38,10 @@
         }
       },
       {
-        "name": "typescript-plugin-next"      // Supports Next.js types
+        "name": "typescript-plugin-next" // Supports Next.js types
+      },
+      {
+        "name": "next"
       }
     ]
   },
@@ -42,8 +53,8 @@
   ],
   "exclude": [
     "node_modules",
-    "build",                               // Excludes build directory for cleaner type-checking
-    "**/*.test.ts",                        // Skips test files, optimizing for production build
-    "**/__mocks__"                         // Excludes mock files from production builds
+    "build", // Excludes build directory for cleaner type-checking
+    "**/*.test.ts", // Skips test files, optimizing for production build
+    "**/__mocks__" // Excludes mock files from production builds
   ]
 }

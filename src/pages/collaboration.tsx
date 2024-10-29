@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Sidebar } from '../components/UIElements/Sidebar';
-import { Header } from '../components/UIElements/Header';
+import  Sidebar from '../components/UIElements/Sidebar';
+import  Header from '../components/UIElements/Header';
 import { Forum } from '../components/Collaboration/Forum';
 import { Chat } from '../components/Collaboration/Chat';
-import { DocumentSharing } from '../components/Collaboration/DocumentSharing';
+import  DocumentSharing from '../components/Collaboration/DocumentSharing';
 import { VotingSystem } from '../components/Collaboration/VotingSystem';
 import { TaskManager } from '../components/Collaboration/TaskManager';
-import { CollaborationAnalytics } from '../components/Collaboration/CollaborationAnalytics';
+import CollaborationAnalytics from '../components/Collaboration/CollaborationAnalytics';
 import { useCollaborationData } from '../hooks/useCollaborationData';
 
 const CollaborationPage: React.FC = () => {

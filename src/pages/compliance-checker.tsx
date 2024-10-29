@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Sidebar } from '../components/UIElements/Sidebar';
-import { Header } from '../components/UIElements/Header';
-import { Footer } from '../components/UIElements/Footer';
+import  Sidebar from '../components/UIElements/Sidebar';
+import  Header from '../components/UIElements/Header';
+import  Footer  from '../components/UIElements/Footer';
 import { ComplianceForm } from '../components/ComplianceChecker/ComplianceForm';
 import { RiskAssessment } from '../components/ComplianceChecker/RiskAssessment';
 import { DocumentUpload } from '../components/ComplianceChecker/DocumentUpload';

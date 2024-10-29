@@ -2,6 +2,7 @@
 
 // Interface for individual crime data entries
 export interface CrimeData {
+  date: string | number | Date;
   id: number;
   title: string;
   description: string;

@@ -3,39 +3,50 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Define strict types for AuditStatus and AuditRecord
+type AuditStatus = 'Pass' | 'Fail' | 'Pending';
+
 interface AuditRecord {
   id: string;
   date: string;
   auditor: string;
-  status: string;
+  status: AuditStatus;
   notes: string;
 }
 
-interface AuditHistoryTableProps {
-  audits: AuditRecord[];
+interface PaginatedResult<T> {
+  items: T[];
+  currentPage: number;
+  totalPages: number;
 }
 
-export const AuditHistoryTable: React.FC<AuditHistoryTableProps> = ({ audits }) => {
+interface AuditHistoryTableProps {
+  auditData: PaginatedResult<AuditRecord>;
+}
+
+export const AuditHistoryTable: React.FC<AuditHistoryTableProps> = ({ auditData }) => {
   const [sortField, setSortField] = useState<keyof AuditRecord>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(auditData.currentPage);
+
   const rowsPerPage = 5;
 
-  // Sort and Filter Audits
-  const sortedAndFilteredAudits = audits
-    .filter(audit => audit.auditor.toLowerCase().includes(searchTerm.toLowerCase()) || audit.status.toLowerCase().includes(searchTerm.toLowerCase()))
+  // Filter and Sort Audits based on search and sort settings
+  const sortedAndFilteredAudits = auditData.items
+    .filter(audit => 
+      audit.auditor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      audit.status.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     .sort((a, b) => {
       const orderMultiplier = sortOrder === 'asc' ? 1 : -1;
       return a[sortField] < b[sortField] ? -1 * orderMultiplier : a[sortField] > b[sortField] ? 1 * orderMultiplier : 0;
     });
 
-  // Pagination
-  const totalPages = Math.ceil(sortedAndFilteredAudits.length / rowsPerPage);
   const paginatedAudits = sortedAndFilteredAudits.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const totalPages = Math.ceil(sortedAndFilteredAudits.length / rowsPerPage);
 
-  // Toggle sort direction
   const toggleSort = (field: keyof AuditRecord) => {
     if (sortField === field) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -45,7 +56,6 @@ export const AuditHistoryTable: React.FC<AuditHistoryTableProps> = ({ audits }) 
     }
   };
 
-  // Expand/Collapse row
   const toggleRow = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
   };
@@ -94,7 +104,9 @@ export const AuditHistoryTable: React.FC<AuditHistoryTableProps> = ({ audits }) 
                   >
                     <td className="p-2">{audit.date}</td>
                     <td className="p-2">{audit.auditor}</td>
-                    <td className={`p-2 ${audit.status === 'Pass' ? 'text-green-600' : 'text-red-600'}`}>{audit.status}</td>
+                    <td className={`p-2 ${audit.status === 'Pass' ? 'text-green-600' : audit.status === 'Fail' ? 'text-red-600' : 'text-yellow-500'}`}>
+                      {audit.status}
+                    </td>
                     <td className="p-2 text-blue-500 underline cursor-pointer">Expand</td>
                   </motion.tr>
                   

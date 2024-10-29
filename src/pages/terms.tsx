@@ -1,15 +1,33 @@
 // src/pages/terms.tsx
 
-import React from 'react';
-import TableOfContents from '../components/TermsPage/TableOfContents';
-import BackToTopButton from '../components/TermsPage/BackToTopButton';
+import React, { useEffect, useState } from 'react';
+import { TableOfContents } from '../components/TermsPage/TableOfContents';
+import { BackToTopButton } from '../components/TermsPage/BackToTopButton';
 import '../styles/terms.css';
 
 const TermsPage: React.FC = () => {
+  // State to track scroll position for BackToTopButton visibility
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Dynamic content for Table of Contents
+  const tocContent = [
+    { id: 'terms-of-service', title: 'Terms of Service' },
+    { id: 'privacy-policy', title: 'Privacy Policy' },
+    { id: 'contact-information', title: 'Contact Information' },
+  ];
+
   return (
     <div className="terms-page container mx-auto py-12">
       <h1 className="text-4xl font-bold mb-8">Terms of Service & Privacy Policy</h1>
-      <TableOfContents />
+      <TableOfContents content={tocContent} />
 
       {/* Terms of Service Section */}
       <section id="terms-of-service" className="mt-8">
@@ -53,7 +71,7 @@ const TermsPage: React.FC = () => {
         <p>Address: 123 Guardian St., Tech City</p>
       </section>
 
-      <BackToTopButton />
+      {showBackToTop && <BackToTopButton />}
     </div>
   );
 };

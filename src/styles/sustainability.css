@@ -1,29 +1,142 @@
 /* src/styles/sustainability.css */
 
 .sustainability-page {
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .metric-card, .assessment-card {
-    background-color: #f5f7fa;
-    padding: 1.5rem;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-  }
-  
-  .metric-card:hover, .assessment-card:hover {
-    transform: scale(1.02);
-  }
-  
-  .lifecycle-assessments h2, .sustainability-metrics h3 {
-    color: #2f80ed;
-  }
-  
-  .sustainability-goal-tracker {
-    padding: 2rem;
-    background-color: #e8f6e8;
-    border-radius: 8px;
-    margin-top: 2rem;
-  }
-  
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  background-color: #ffffff;
+}
+
+.metric-card,
+.assessment-card {
+  background-color: #f5f7fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card:hover,
+.assessment-card:hover {
+  transform: scale(1.02);
+}
+
+.lifecycle-assessments h2,
+.sustainability-metrics h3 {
+  color: #2f80ed;
+  font-weight: bold;
+}
+
+.sustainability-goal-tracker {
+  padding: 2rem;
+  background-color: #e8f6e8;
+  border-radius: 8px;
+  margin-top: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Carbon Footprint Graph */
+.carbon-footprint-graph {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.carbon-footprint-graph h2 {
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.carbon-footprint-graph:hover {
+  background-color: #eef3f8;
+}
+
+/* Stats summary under carbon footprint graph */
+.stats-summary {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1rem;
+  color: #374151;
+  margin-top: 1rem;
+}
+
+.stats-summary p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Goal Tracker Progress Bar */
+.goal-tracker-progress {
+  height: 1.5rem;
+  border-radius: 8px;
+  background-color: #d1e8d1;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.goal-tracker-progress .progress-bar {
+  height: 100%;
+  background-color: #34d399;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  transition: width 0.4s ease;
+}
+
+/* Lifecycle Assessments */
+.lifecycle-assessment-card {
+  background-color: #f5f7fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lifecycle-assessment-card h3 {
+  color: #2f80ed;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Interactive Hover Effects */
+.metric-card:hover,
+.assessment-card:hover,
+.lifecycle-assessment-card:hover {
+  background-color: #eef3f8;
+}
+
+.sustainability-goal-tracker:hover {
+  background-color: #d4ecd4;
+}
+
+/* Tooltips for additional insights */
+.tooltip {
+  position: relative;
+  cursor: pointer;
+  color: #3b82f6;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
