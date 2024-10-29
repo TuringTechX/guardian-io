@@ -33,7 +33,7 @@ Guardian-IO is a comprehensive platform designed to promote ethical, transparent
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-repo/guardian-io.git
+    git clone https://github.com/TuringTechX/guardian-io.git
     ```
 2. Navigate into the project directory:
     ```bash
