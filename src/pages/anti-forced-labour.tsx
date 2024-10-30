@@ -9,16 +9,17 @@ import PartnerLinks from '../components/AntiForcedLabour/PartnerLinks';
 import AlertsPanel from '../components/AntiForcedLabour/AlertsPanel';
 import '../styles/antiForcedLabour.css';
 import { fetchAuditHistory, fetchPartners } from '../api/antiForcedLabourApi';
-import { Audit, Partner, Outcome } from '../types/antiForcedLabourTypes';
+import { AuditRecord, Partner, Outcome, AuditStatus } from '../types/antiForcedLabourTypes';
 
 const AntiForcedLabourPage: React.FC = () => {
-  const [audits, setAudits] = useState<Audit[]>([]);
+  const [audits, setAudits] = useState<AuditRecord[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // State for filter controls
   const [outcomeFilter, setOutcomeFilter] = useState<Outcome | 'All'>('All');
+  const [statusFilter, setStatusFilter] = useState<AuditStatus | 'All'>('All');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
@@ -29,15 +30,17 @@ const AntiForcedLabourPage: React.FC = () => {
       setError(null);
       try {
         // Fetch audits and partners with error handling
-        const auditData = await fetchAuditHistory(
+        const auditResponse = await fetchAuditHistory(
           outcomeFilter !== 'All' ? outcomeFilter : undefined,
+          statusFilter !== 'All' ? statusFilter : undefined,
           startDate || undefined,
           endDate || undefined,
           sortOrder
         );
-        const partnerData = await fetchPartners();
-        setAudits(auditData);
-        setPartners(partnerData);
+        const partnerResponse = await fetchPartners();
+
+        setAudits(auditResponse.data); // Set data from PaginatedResult
+        setPartners(partnerResponse.data); // Set data from PaginatedResult
       } catch (e) {
         setError('Failed to load data. Please try again later.');
         console.error('Error fetching data:', e);
@@ -46,7 +49,7 @@ const AntiForcedLabourPage: React.FC = () => {
       }
     }
     loadData();
-  }, [outcomeFilter, sortOrder, startDate, endDate]);
+  }, [outcomeFilter, statusFilter, sortOrder, startDate, endDate]);
 
   return (
     <div className="anti-forced-labour-page container mx-auto py-8">
@@ -71,6 +74,15 @@ const AntiForcedLabourPage: React.FC = () => {
             <option value="All">All</option>
             <option value={Outcome.Pass}>Pass</option>
             <option value={Outcome.Fail}>Fail</option>
+          </select>
+        </label>
+        <label>
+          Status Filter:
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value as AuditStatus | 'All')}>
+            <option value="All">All</option>
+            <option value={AuditStatus.Pending}>Pending</option>
+            <option value={AuditStatus.Reviewed}>Reviewed</option>
+            <option value={AuditStatus.InProgress}>In Progress</option>
           </select>
         </label>
         <label>
